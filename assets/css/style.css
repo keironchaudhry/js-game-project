@@ -59,3 +59,22 @@ body {
   background-color: #fff;
   color: #392f5a;
 }
+
+/* Life container */
+
+#lifeContainer {
+  display: flex;
+  align-items: center;
+}
+
+.lives {
+  padding: 10px 15px;
+  border-radius: 20px;
+}
+
+.life-icon {
+  width: 21px;
+  height: 20px;
+  background-image: url("../../assets/sprites/heart.png");
+  background-size: cover;
+}
