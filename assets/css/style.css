@@ -69,3 +69,22 @@ body {
   height: 100vh;
   margin-left: -350px;
 }
+
+/* Life container */
+
+#lifeContainer {
+  display: flex;
+  align-items: center;
+}
+
+.lives {
+  padding: 10px 15px;
+  border-radius: 20px;
+}
+
+.life-icon {
+  width: 21px;
+  height: 20px;
+  background-image: url("../../assets/sprites/heart.png");
+  background-size: cover;
+}
