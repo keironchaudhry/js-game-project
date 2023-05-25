@@ -60,6 +60,16 @@ body {
   color: #392f5a;
 }
 
+#game {
+  background-image: url(../background/tiled-background-yoduh.png);
+  background-repeat: no-repeat;
+  background-size: 220% auto;
+  opacity: 0.8;
+  width: 700vw;
+  height: 100vh;
+  margin-left: -350px;
+}
+
 /* Life container */
 
 #lifeContainer {
