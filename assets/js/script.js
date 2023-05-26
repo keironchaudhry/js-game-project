@@ -21,8 +21,8 @@ scene("game", () => {
   const yoda1 = add([sprite("yoda1"), pos(400, 200), scale(0.1)]);
 
   //layers
-  layers(["bg", "obj", "ui"], "obj");
-  add([sprite, layer("obj")]);
+  // layers(["bg", "obj", "ui"], "obj");
+  // add([sprite, layer("obj")]);
 });
 
 // create life containers
