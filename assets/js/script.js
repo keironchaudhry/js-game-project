@@ -1,4 +1,5 @@
 // initialize kaboom context
+
 kaboom({
   global: true,
   width: 800,
@@ -16,13 +17,23 @@ let lives = 3;
 loadRoot("assets/");
 loadSprite("yoda1", "sprites/yoda-1.png");
 
+
+
 // create game scenes
 scene("game", () => {
-  const yoda1 = add([sprite("yoda1"), pos(400, 200), scale(0.1)]);
-
   //layers
-  // layers(["bg", "obj", "ui"], "obj");
-  // add([sprite, layer("obj")]);
+
+  const ui = add([
+    fixed(),
+    z(100),
+  ])
+  
+  // This will be on top, because the parent node has z(100)
+  ui.add([
+    sprite("yoda1"),
+    scale(0.2),
+  ])
+  
 });
 
 // create life containers
