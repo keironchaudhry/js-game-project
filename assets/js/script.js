@@ -19,33 +19,18 @@ loadSprite("yoda1", "sprites/yoda-1.png");
 loadSprite("ground", "background/ground.png");
 
 
-
 // create game scenes
 scene("game", () => {
   //layers
 
-  const ui = add([
-    fixed(),
-    z(100),
-  ])
+  const ui = add([fixed(), z(100)]);
 
-  const bg = add([
-    fixed(),
-    z(1),
-  ])
-  
-  // This will be on top, because the parent node has z(100)
-  ui.add([
-    sprite("yoda1"),
-    scale(0.2),
-  ])
-  bg.add([
-    sprite("ground"),
-    scale(0.2),
-    pos(0, 40)
-  ])
-  
+  const bg = add([fixed(), z(1)]);
+
+  ui.add([sprite("yoda1"), scale(0.2)]);
+  bg.add([sprite("ground"), scale(0.2), pos(0, 40)]);
 });
+
 
 // create life containers
 function createLifeIcons() {

@@ -61,13 +61,11 @@ body {
 }
 
 #game {
-  /* background-repeat: no-repeat;
-  background-size: 220% auto;
   width: 700vw;
-  height: 100vh; */
-  /* background-position: center;
+  height: 100vh; 
+  background-position: center;
   height: auto;
-  width: auto; */
+  width: auto; 
 }
 
 /* Life container */
