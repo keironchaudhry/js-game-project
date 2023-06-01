@@ -2,8 +2,8 @@
 
 kaboom({
   global: true,
-  width: 400,
-  height: 400,
+  width: 1500,
+  height: 500,
   canvas: document.querySelector("#game"),
   scale: 1,
   debug: true,
@@ -13,11 +13,15 @@ kaboom({
 // global variables
 let lives = 3;
 
+const SPEED = 250;
+const JUMP_FORCE = 240;
+
+setGravity(640);
+
 // loads sprite
 loadRoot("assets/");
 loadSprite("yoda1", "sprites/yoda-1.png");
 loadSprite("ground", "background/ground.png");
-
 
 // create game scenes
 scene("game", () => {
@@ -27,10 +31,63 @@ scene("game", () => {
 
   const bg = add([fixed(), z(1)]);
 
-  ui.add([sprite("yoda1"), scale(0.2)]);
-  bg.add([sprite("ground"), scale(0.2), pos(0, 40)]);
-});
+  const level = addLevel(
+    [
+      "                                    ",
+      "==================== ===============",
+    ],
+    {
+      tileWidth: 64,
+      tileHeight: 64,
+      pos: vec2(140, 200),
+      tiles: {
+        "=": () => [
+          sprite("ground"),
+          area(),
+          pos(-60, 350),
+          body({ isStatic: true }),
+          anchor("bot"),
+        ],
+      },
+    }
+  );
 
+  const yoda1 = add([
+    sprite("yoda1", { flipX: true }),
+    scale(0.1),
+    anchor("bot"),
+    area(),
+    
+    body(),
+    pos(100, 20),
+  ]);
+
+// Movements
+
+  onKeyDown("left", () => {
+    yoda1.move(-SPEED, 0), (yoda1.flipX = false);
+  });
+
+  onKeyDown("right", () => {
+    yoda1.move(SPEED, 0), (yoda1.flipX = true);
+  });
+
+  onKeyDown("up", () => {
+    yoda1.move(0, -SPEED);
+  });
+
+  onKeyDown("down", () => {
+    yoda1.move(0, SPEED);
+  });
+
+  onClick(() => {
+    yoda1.moveTo(mousePos());
+  });
+
+ 
+  // ui.add([sprite("yoda1"), scale(0.2)]);
+  // bg.add([sprite("ground"), scale(0.2), pos(0, 40)]);
+});
 
 // create life containers
 function createLifeIcons() {

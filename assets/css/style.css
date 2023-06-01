@@ -4,7 +4,7 @@ body {
 }
 
 .navbar {
-  background-color: hsl(116, 54%, 76%);
+  background-image: linear-gradient(to top, #a8edea 0%, #fed6e3 100%);
   color: black;
   font-weight: 500;
   opacity: 0.8;
@@ -22,11 +22,10 @@ body {
 
 .cat-icon {
   width: 30px;
-  height: 30px;
+  height: 20px;
   margin-right: 10px;
-  border: 1px solid white;
-  border-radius: 50%;
-  background-color: #fff;
+  margin-left: 10px;
+  transform: scaleX(-1);
 }
 
 .score,
@@ -53,19 +52,24 @@ body {
   transition: background-color 0.3s;
   display: flex;
   justify-content: center;
+  margin-right: 10px;
 }
 
 .option:hover {
-  background-color: #fff;
   color: #392f5a;
+  transform: scale(1.1);
+  transition: 2s;
 }
 
 #game {
-  width: 700vw;
-  height: 100vh; 
-  background-position: center;
+  width: 150%;
   height: auto;
-  width: auto; 
+  background-position: center;
+  background-size: cover;
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* Life container */
