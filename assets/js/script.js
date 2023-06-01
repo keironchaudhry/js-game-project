@@ -2,8 +2,8 @@
 
 kaboom({
   global: true,
-  width: 800,
-  height: 800,
+  width: 400,
+  height: 400,
   canvas: document.querySelector("#game"),
   scale: 1,
   debug: true,
@@ -16,25 +16,21 @@ let lives = 3;
 // loads sprite
 loadRoot("assets/");
 loadSprite("yoda1", "sprites/yoda-1.png");
-
+loadSprite("ground", "background/ground.png");
 
 
 // create game scenes
 scene("game", () => {
   //layers
 
-  const ui = add([
-    fixed(),
-    z(100),
-  ])
-  
-  // This will be on top, because the parent node has z(100)
-  ui.add([
-    sprite("yoda1"),
-    scale(0.2),
-  ])
-  
+  const ui = add([fixed(), z(100)]);
+
+  const bg = add([fixed(), z(1)]);
+
+  ui.add([sprite("yoda1"), scale(0.2)]);
+  bg.add([sprite("ground"), scale(0.2), pos(0, 40)]);
 });
+
 
 // create life containers
 function createLifeIcons() {

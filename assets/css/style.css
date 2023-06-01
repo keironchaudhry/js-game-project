@@ -1,7 +1,6 @@
 body {
   margin: 0;
   /* overflow: hidden; */
-  width: 100%;
 }
 
 .navbar {
@@ -62,11 +61,11 @@ body {
 }
 
 #game {
-  background-image: url(../background/tiled-background-yoduh.png);
-  background-repeat: no-repeat;
-  background-size: 220% auto;
   width: 700vw;
-  height: 100vh;
+  height: 100vh; 
+  background-position: center;
+  height: auto;
+  width: auto; 
 }
 
 /* Life container */
