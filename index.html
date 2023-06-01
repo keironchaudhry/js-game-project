@@ -14,11 +14,12 @@
     <title>Adventures of Yoduh</title>
   </head>
   <body>
-    <div class="navbar">
+    <nav class="navbar">
       <div class="navbar-left">
         <img src="assets/sprites/yoda-1.png" alt="Cat Icon" class="cat-icon" />
         <span class="score">Score: <span id="score-value">0</span></span>
-        <!-- <span class="health"
+      </div>
+      <span class="health"
           >Health:
           <span id="health-value"
             ><img
@@ -26,18 +27,19 @@
               height="20"
               width="20"
               alt="" /></span
-        ></span> -->
-        <div id="lifeContainer" class="lives"></div>
+        ></span>
+      <div id="lifeContainer" class="lives"></div>
       </div>
       <div class="navbar-right">
         <a href="#" class="option">Options</a>
       </div>
     </div>
+    </nav>
 
-    <!-- <canvas id="game"></canvas> -->
+    <canvas id="game"></canvas>
 
     <!-- KaboomJS Script -->
-    <script src="https://unpkg.com/kaboom/dist/kaboom.js"></script>
+    <script src="https://unpkg.com/kaboom@3000.0.1/dist/kaboom.js"></script>
 
     <!-- Game JS Files -->
     <script src="assets/js/script.js"></script>
