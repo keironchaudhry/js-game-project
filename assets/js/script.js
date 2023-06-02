@@ -63,10 +63,7 @@ scene("game", () => {
   const ui = add([fixed(), z(100)]);
   const bg = add([fixed(), z(1)]);
   const level = addLevel(
-    [
-      "                                    ",
-      "==================== ===============",
-    ],
+    ["           ===              ", "==================== ========"],
     {
       tileWidth: 64,
       tileHeight: 64,
@@ -94,6 +91,18 @@ scene("game", () => {
 
   let currentSpriteIndex = 0;
   const spriteChangeDelay = 1;
+
+
+  yoda1.onUpdate(() => {
+    // Set the viewport center to player.pos
+    camPos(yoda1.worldPos());
+  });
+
+  yoda1.onPhysicsResolve(() => {
+    // Set the viewport center to player.pos
+    camPos(yoda1.worldPos());
+  });
+
   // Movements
 
   onKeyDown("right", async () => {
