@@ -10,11 +10,22 @@ kaboom({
   background: [0, 0, 0, 0],
 });
 
+let spr = null;
+
+load(
+  new Promise((res) => {
+    // wait() won't work here because timers are not run during loading so we use setTimeout
+    setTimeout(() => {
+      res();
+    }, 1000);
+  })
+);
+
 // global variables
 let lives = 3;
 
-const SPEED = 300;
-const JUMP_FORCE = 540;
+const SPEED = 250;
+const JUMP_FORCE = 200;
 
 setGravity(640);
 
@@ -46,6 +57,7 @@ spriteNames.forEach((name, index) => {
 // loads sprite
 loadRoot("assets/");
 loadSprite("yoda1", "sprites/yoda-1.png");
+loadSprite("yoda0", "sprites/yoda-0.png");
 loadSprite("yoda2", "sprites/yoda-2.png");
 loadSprite("yoda3", "sprites/yoda-3.png");
 loadSprite("yoda4", "sprites/yoda-4.png");
@@ -69,13 +81,14 @@ scene("game", () => {
   const bg = add([fixed("background"), z(1)]);
   const level = addLevel(
     [
-      "                                          ==                               ",
-      "                                  =====                               ",
-      "                                 ??                                     ",
-      "           ===                  ??                                      ",
-      "=++++++++++++++++++= =+++++++?, ================?,====================",
-      "¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿ ¿¿¿¿¿¿¿¿¿?, ¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿,¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿?",
-      "¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿ ¿¿¿¿¿¿¿¿¿?, ¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿,¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿?",
+      "                                          =?     =?,                                              ",
+      "       =?                            ====?          ,                                              ",
+      "                                  =?               ,                                              ",
+      "              ==?               ?+?                 ,                                              ",
+      "=++++++++++++++++++==++++++++?,================?,====================?                         ",
+      "¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿,¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿,¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿,   =????===?             ",
+      "¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿,¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿,¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿  =  ?====?   =????===?   ",
+      "¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿,¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿,¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿= ??===?   ?????===?       ",
     ],
 
     {
@@ -115,8 +128,6 @@ scene("game", () => {
     }
   );
 
-
-
   const yoda1 = add([
     sprite("yoda1"),
     scale(0.2),
@@ -124,10 +135,11 @@ scene("game", () => {
     area(),
     body(),
     pos(-70, 20),
+    doubleJump(0.5),
   ]);
 
   let currentSpriteIndex = 0;
-  const spriteChangeDelay = 1;
+  const spriteChangeDelay = 0.04;
 
   yoda1.onUpdate(() => {
     camPos(yoda1.worldPos());
@@ -139,6 +151,38 @@ scene("game", () => {
 
   // Movements
 
+  onLoading((progress) => {
+    // Black background
+    drawRect({
+      width: width(),
+      height: height(),
+      color: rgb(0, 0, 0),
+    });
+
+    // A pie representing current load progress
+    drawCircle({
+      pos: center(),
+      radius: 32,
+      end: map(progress, 0, 1, 0, 360),
+    });
+
+    drawText({
+      text: "loading" + ".".repeat(wave(1, 4, time() * 12)),
+      font: "monospace",
+      size: 24,
+      anchor: "center",
+      pos: center().add(0, 70),
+    });
+  });
+
+  onDraw(() => {
+    if (spr) {
+      drawSprite({
+        sprite: spr,
+      });
+    }
+  });
+
   onKeyDown("right", async () => {
     currentSpriteIndex++;
 
@@ -147,8 +191,9 @@ scene("game", () => {
     }
     const nextSpriteName = spriteNames[currentSpriteIndex];
     yoda1.move(SPEED, 0), (yoda1.flipX = false);
-    yoda1.use(sprite(nextSpriteName));
     await wait(spriteChangeDelay);
+    yoda1.use(sprite(nextSpriteName));
+    // await wait(spriteChangeDelay);
   });
 
   onKeyDown("left", async () => {
@@ -159,10 +204,9 @@ scene("game", () => {
     }
     const nextSpriteName = spriteNames[currentSpriteIndex];
     yoda1.move(-SPEED, 0);
-
+    await wait(spriteChangeDelay);
     yoda1.use(sprite(nextSpriteName));
     yoda1.flipX = true;
-    await wait(spriteChangeDelay);
   });
 
   const defaultSpriteName = "default";
@@ -185,7 +229,20 @@ scene("game", () => {
   onClick(() => {
     yoda1.moveTo(mousePos());
   });
+  onKeyPress("space", () => {
+    yoda1.move(0, -SPEED, JUMP_FORCE);
 
+    if (yoda1.flipX) {
+      yoda1.use(sprite(jumpSpriteName, { flipX: true }));
+    } else {
+      yoda1.use(sprite(jumpSpriteName));
+    }
+    yoda1.doubleJump();
+  });
+
+  onKeyRelease("space", () => {
+    yoda1.use(sprite("yoda1"));
+  });
   // ui.add([sprite("yoda1"), scale(0.2)]);
   // bg.add([sprite("background"),  pos(0, 40)]);
 });
