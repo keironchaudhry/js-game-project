@@ -55,7 +55,11 @@ loadSprite("yoda7", "sprites/yoda-7.png");
 loadSprite("yoda8", "sprites/yoda-8.png");
 loadSprite("jump", "sprites/jump.png");
 loadSprite("yodaStop", "sprites/yoda-halt.png");
-loadSprite("ground", "background/ground.png");
+loadSprite("ground1", "background/ground-1.png");
+loadSprite("ground2", "background/ground-2.png");
+loadSprite("ground3", "background/ground-3.png");
+loadSprite("ground4", "background/ground-4.png");
+
 loadSprite("background", "background/background.jpg");
 
 // create game scenes
@@ -65,12 +69,12 @@ scene("game", () => {
   const bg = add([fixed("background"), z(1)]);
   const level = addLevel(
     [
-      "                                                ",
-      "                                                ",
-      "                                                ",
-      "           ===                                  ",
-      "==================== ========, =================, ====================",
-      "==================== ========, =================",
+      "                                          ==                               ",
+      "                                  =====                               ",
+      "                                 ??                                     ",
+      "           ===                  ??                                      ",
+      "=++++++++++++++++++= =+++++++?, ================?,====================",
+      "¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿ ¿¿¿¿¿¿¿¿¿?, ¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿,¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿?",
     ],
 
     {
@@ -79,7 +83,28 @@ scene("game", () => {
       pos: vec2(140, 200),
       tiles: {
         "=": () => [
-          sprite("ground"),
+          sprite("ground1"),
+          area({ scale: 0.8 }),
+          pos(-700, 550),
+          body({ isStatic: true }),
+          anchor("bot"),
+        ],
+        "+": () => [
+          sprite("ground2"),
+          area({ scale: 0.8 }),
+          pos(-700, 550),
+          body({ isStatic: true }),
+          anchor("bot"),
+        ],
+        "?": () => [
+          sprite("ground3"),
+          area({ scale: 0.8 }),
+          pos(-700, 550),
+          body({ isStatic: true }),
+          anchor("bot"),
+        ],
+        "¿": () => [
+          sprite("ground4"),
           area({ scale: 0.8 }),
           pos(-700, 550),
           body({ isStatic: true }),
@@ -88,6 +113,8 @@ scene("game", () => {
       },
     }
   );
+
+
 
   const yoda1 = add([
     sprite("yoda1"),
