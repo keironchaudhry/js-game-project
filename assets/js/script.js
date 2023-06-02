@@ -65,6 +65,7 @@ loadSprite("yoda5", "sprites/yoda-5.png");
 loadSprite("yoda6", "sprites/yoda-6.png");
 loadSprite("yoda7", "sprites/yoda-7.png");
 loadSprite("yoda8", "sprites/yoda-8.png");
+loadSprite("chicken", "sprites/chicken.png");
 loadSprite("jump", "sprites/jump.png");
 loadSprite("yodaStop", "sprites/yoda-halt.png");
 loadSprite("ground1", "background/ground-1.png");
@@ -81,13 +82,13 @@ scene("game", () => {
   const bg = add([fixed("background"), z(1)]);
   const level = addLevel(
     [
-      "                                          =?     =?,                                              ",
-      "       =?                            ====?          ,                                              ",
-      "                                  =?               ,                                              ",
-      "              ==?               ?+?                 ,                                              ",
-      "=++++++++++++++++++==++++++++?,================?,====================?                         ",
-      "¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿,¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿,¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿,   =????===?             ",
-      "¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿,¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿,¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿  =  ?====?   =????===?   ",
+      "       @                                =?     =?,                                             ",
+      "       =?                            ====?          ,                                            ",
+      "                                    =?               ,                                          ",
+      "                  ==?               ?+?                 ,                                        ",
+      "=++++++++++++++++++==++++++++?,================?,====================?                           ",
+      "¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿,¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿,¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿,   =????===?              ",
+      "¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿,¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿,¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿  =  ?====?   =????===?    ",
       "¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿,¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿,¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿= ??===?   ?????===?       ",
     ],
 
@@ -124,9 +125,17 @@ scene("game", () => {
           body({ isStatic: true }),
           anchor("bot"),
         ],
+        "@": () => [
+          sprite("chicken"),
+          area({ scale: 2.2 }),
+          pos(-660, 450),
+          anchor("bot"),
+          body({ isStatic: true }),
+        ],
       },
     }
   );
+
 
   const yoda1 = add([
     sprite("yoda1"),
@@ -137,6 +146,7 @@ scene("game", () => {
     pos(-70, 20),
     doubleJump(0.5),
   ]);
+
 
   let currentSpriteIndex = 0;
   const spriteChangeDelay = 0.04;
@@ -243,7 +253,7 @@ scene("game", () => {
   onKeyRelease("space", () => {
     yoda1.use(sprite("yoda1"));
   });
-  // ui.add([sprite("yoda1"), scale(0.2)]);
+  
   // bg.add([sprite("background"),  pos(0, 40)]);
 });
 
