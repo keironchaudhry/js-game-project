@@ -13,8 +13,8 @@ kaboom({
 // global variables
 let lives = 3;
 
-const SPEED = 150;
-const JUMP_FORCE = 240;
+const SPEED = 300;
+const JUMP_FORCE = 540;
 
 setGravity(640);
 
@@ -54,18 +54,14 @@ loadSprite("yoda6", "sprites/yoda-6.png");
 loadSprite("yoda7", "sprites/yoda-7.png");
 loadSprite("yoda8", "sprites/yoda-8.png");
 loadSprite("jump", "sprites/jump.png");
-
 loadSprite("yodaStop", "sprites/yoda-halt.png");
 loadSprite("ground", "background/ground.png");
 
 // create game scenes
 scene("game", () => {
   //layers
-
   const ui = add([fixed(), z(100)]);
-
   const bg = add([fixed(), z(1)]);
-
   const level = addLevel(
     [
       "                                    ",
@@ -78,7 +74,7 @@ scene("game", () => {
       tiles: {
         "=": () => [
           sprite("ground"),
-          area({ scale: 0.77 }),
+          area({ scale: 0.8 }),
           pos(-60, 350),
           body({ isStatic: true }),
           anchor("bot"),
@@ -92,10 +88,10 @@ scene("game", () => {
     scale(0.2),
     anchor("bot"),
     area(),
-
     body(),
     pos(100, 20),
   ]);
+
   let currentSpriteIndex = 0;
   const spriteChangeDelay = 1;
   // Movements
@@ -130,13 +126,16 @@ scene("game", () => {
   const jumpSpriteName = "jump";
 
   onKeyDown("up", () => {
-    // Trigger the jump action
-    yoda1.move(0, -SPEED);
-    yoda1.use(sprite(jumpSpriteName));
+    yoda1.move(0, -SPEED, JUMP_FORCE);
+
+    if (yoda1.flipX) {
+      yoda1.use(sprite(jumpSpriteName, { flipX: true }));
+    } else {
+      yoda1.use(sprite(jumpSpriteName));
+    }
   });
 
   onKeyRelease("up", () => {
-    // Reset the sprite to the default one
     yoda1.use(sprite("yoda1"));
   });
 
