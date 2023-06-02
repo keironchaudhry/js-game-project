@@ -56,14 +56,23 @@ loadSprite("yoda8", "sprites/yoda-8.png");
 loadSprite("jump", "sprites/jump.png");
 loadSprite("yodaStop", "sprites/yoda-halt.png");
 loadSprite("ground", "background/ground.png");
+loadSprite("background", "background/background.jpg");
 
 // create game scenes
 scene("game", () => {
   //layers
   const ui = add([fixed(), z(100)]);
-  const bg = add([fixed(), z(1)]);
+  const bg = add([fixed("background"), z(1)]);
   const level = addLevel(
-    ["           ===              ", "==================== ========"],
+    [
+      "                                                ",
+      "                                                ",
+      "                                                ",
+      "           ===                                  ",
+      "==================== ========, =================, ====================",
+      "==================== ========, =================",
+    ],
+
     {
       tileWidth: 64,
       tileHeight: 64,
@@ -72,7 +81,7 @@ scene("game", () => {
         "=": () => [
           sprite("ground"),
           area({ scale: 0.8 }),
-          pos(-60, 350),
+          pos(-700, 550),
           body({ isStatic: true }),
           anchor("bot"),
         ],
@@ -86,20 +95,17 @@ scene("game", () => {
     anchor("bot"),
     area(),
     body(),
-    pos(100, 20),
+    pos(-70, 20),
   ]);
 
   let currentSpriteIndex = 0;
   const spriteChangeDelay = 1;
 
-
   yoda1.onUpdate(() => {
-    // Set the viewport center to player.pos
     camPos(yoda1.worldPos());
   });
 
   yoda1.onPhysicsResolve(() => {
-    // Set the viewport center to player.pos
     camPos(yoda1.worldPos());
   });
 
@@ -153,7 +159,7 @@ scene("game", () => {
   });
 
   // ui.add([sprite("yoda1"), scale(0.2)]);
-  // bg.add([sprite("ground"), scale(0.2), pos(0, 40)]);
+  // bg.add([sprite("background"),  pos(0, 40)]);
 });
 
 // create life containers
