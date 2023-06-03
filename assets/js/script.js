@@ -136,7 +136,6 @@ scene("game", () => {
     }
   );
 
-
   const yoda1 = add([
     sprite("yoda1"),
     scale(0.2),
@@ -146,7 +145,6 @@ scene("game", () => {
     pos(-70, 20),
     doubleJump(0.5),
   ]);
-
 
   let currentSpriteIndex = 0;
   const spriteChangeDelay = 0.04;
@@ -253,7 +251,7 @@ scene("game", () => {
   onKeyRelease("space", () => {
     yoda1.use(sprite("yoda1"));
   });
-  
+
   // bg.add([sprite("background"),  pos(0, 40)]);
 });
 
